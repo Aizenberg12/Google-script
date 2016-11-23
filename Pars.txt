@@ -1,0 +1,48 @@
+function myFunction() {
+  var lastAdminRow = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1].getLastRow();
+  var lastReferenceRow = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0].getLastRow();
+  var data1 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1].getDataRange().getValues();
+  var data2 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0].getDataRange().getValues();
+  //
+  var m = 1;
+  for (var i = 0; i < data1.length; i++) {
+    
+    var row = ""; 
+    row = data1[i][1];
+    row.toString();
+    //Logger.log(row);
+    for (var j = 1; j < lastReferenceRow; j++){
+      var row2 = "";
+      row2 = data2[j][0];
+      row2.toString();
+      //Logger.log(data2.getType);
+      if(row == row2){
+        var id = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0].getSheetId();//получаем id эталон листа
+        var range = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1].getRange(i+1, 2, 1, 14);
+        var rangeType = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1].getRange(i+1, 1, 1, 1);
+        //получаем нужную нам строку из админ листа
+        //var range2 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0].getRange();
+        range.copyValuesToRange(id, 2, 13, j+1, j+1);
+        rangeType.copyValuesToRange(id, 2, 2, j+1, j+1);//вставляем скопированную строку в этолон
+        //var cell = range.getCell(i, 2);
+        //var cell2 = range2.getCell(j, 1);
+        
+        //Logger.log(range.getValue());
+        break;
+        //Logger.log(range.getValue());
+          // Logger.log(row);
+        
+      }
+      
+    }
+    if (j == data2.length){
+        var range = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1].getRange(i+1, 1, 1, 14);
+        var id = SpreadsheetApp.getActiveSpreadsheet().getSheets()[2].getSheetId();
+        Logger.log(m);
+       
+        range.copyValuesToRange(id, 1, 14, m, m);
+        m++;
+      }
+  }
+  var row = "";     
+}
